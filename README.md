@@ -6,8 +6,6 @@
   <strong><a>Jing Tang</a><sup></sup></strong>
 </p>
 
-<br>
-
 <table align="center">
   <tr>
     <td align="center" width="100%"><img src="teaser.png" alt="Teaser"></td>
