@@ -14,7 +14,7 @@ This is the Official Repository of "Reinforcing Diffusion Models by Direct Group
 ## Method
 The key insight of our work is that the success of methods like GRPO stems from leveraging fine-grained, relative preference information within a group of samples, not from the policy-gradient formulation itself. Existing methods for diffusion models force the use of inefficient stochastic (SDE) samplers to fit the policy-gradient framework, leading to slow training and suboptimal sample quality.
 
-**DGPO** circumvents this problem by optimizing group-level preferences directly, extending the Direct Preference Optimization (DPO) framework to handle pairwise groups instead of pairwise samples. This allows us to:
+**DGPO** circumvents this problem by optimizing group-level preferences directly, *extending the Direct Preference Optimization (DPO) framework to handle pairwise groups instead of pairwise samples*. This allows us to:
 - **Use Efficient Samplers:** Employ fast and high-fidelity deterministic ODE samplers for generating training data, leading to better-quality rollouts.
 - **Learn Directly from Preferences:** Optimize the model by maximizing the likelihood of group-wise preferences, eliminating the need for a stochastic policy and inefficient random exploration.
 - **Train Efficiently:** Avoid training on the entire sampling trajectory, significantly reducing the computational cost of each iteration.
