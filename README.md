@@ -1,10 +1,6 @@
 # Reinforcing Diffusion Models by Direct Group Preference Optimization
 
-<p align="center">
-  <strong><a>Yihong Luo</a><sup></sup></strong> &nbsp;&nbsp;&nbsp;
-  <strong><a>Tianyang Hu</a><sup></sup></strong> &nbsp;&nbsp;&nbsp;
-  <strong><a>Jing Tang</a><sup></sup></strong>
-</p>
+This is the Official Repository of "Reinforcing Diffusion Models by Direct Group Preference Optimization", by *Yihong Luo, Tianyang Hu, Jing Tang*.
 
 <table align="center">
   <tr>
