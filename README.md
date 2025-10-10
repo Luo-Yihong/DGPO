@@ -44,3 +44,21 @@ DGPO consistently outperforms Flow-GRPO on target metrics for Compositional Gene
 | Flow-GRPO | --- | --- | 23.31 | 5.92 | 4.22 | 1.28 | 23.53 | 3.66 |
 | **DGPO (Ours)** | --- | --- | **23.89** | **6.08** | **4.40** | **1.32** | **23.91** | **3.74** |
 
+## Contact
+
+Please contact Yihong Luo (yluocg@connect.ust.hk) if you have any questions about this work.
+
+## Bibtex
+
+```
+@misc{luo2025dgpo,
+      title={Reinforcing Diffusion Models by Direct Group Preference Optimization}, 
+      author={Yihong Luo and Tianyang Hu and Jing Tang},
+      year={2025},
+      eprint={2510.08425},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2510.08425}, 
+}
+```
+
