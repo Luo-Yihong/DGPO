@@ -19,7 +19,7 @@ The key insight of our work is that the success of methods like GRPO stems from 
 - **Learn Directly from Preferences:** Optimize the model by maximizing the likelihood of group-wise preferences, eliminating the need for a stochastic policy and inefficient random exploration.
 - **Train Efficiently:** Avoid training on the entire sampling trajectory, significantly reducing the computational cost of each iteration.
 
-For a group of generated samples, we partition them into a positive set $\mathcal{G}^+$ and a negative set $\mathcal{G}^-$ based on their reward. The model with parameter $\theta$ is trained by maximum likelihood learning of a group-level reward: 
+For a group of generated samples, we partition them into a positive group $\mathcal{G}^+$ and a negative group $\mathcal{G}^-$ based on their reward. The model with parameter $\theta$ is trained by maximum likelihood learning of a group-level reward: 
 
 $$
 \max_{\theta} E_{(\mathcal{G}^+, \mathcal{G}^-, c) \sim \mathcal{D}} \log p_\theta(\mathcal{G}^+ \succ \mathcal{G}^-|c) = E_{(\mathcal{G}^+, \mathcal{G}^-, c) \sim \mathcal{D}} \log\sigma(R_\theta(\mathcal{G}^+|c) - R_\theta(\mathcal{G}^-|c)).
