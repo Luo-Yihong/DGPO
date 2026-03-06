@@ -11,6 +11,10 @@ This is the Official Repository of "[Reinforcing Diffusion Models by Direct Grou
   </tr>
 </table>
 
+## 🔥News
+- (2026/01) DGPO is accepted to ICLR 2025 🎉!
+- (2026/03/07) Code is ready to be released next week.
+
 ## Method
 The key insight of our work is that the success of methods like GRPO stems from leveraging fine-grained, relative preference information within a group of samples, not from the policy-gradient formulation itself. Existing methods for diffusion models force the use of inefficient stochastic (SDE) samplers to fit the policy-gradient framework, leading to slow training and suboptimal sample quality.
 
