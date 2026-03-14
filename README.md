@@ -14,6 +14,7 @@ This is the Official Repository of "[Reinforcing Diffusion Models by Direct Grou
 ## 🔥News
 - (2026/01) DGPO is accepted to ICLR 2025 🎉!
 - (2026/03/07) Code is ready to be released next week.
+- (2026/03/14) Training code is released.
 
 ## Method
 The key insight of our work is that the success of methods like GRPO stems from leveraging fine-grained, relative preference information within a group of samples, not from the policy-gradient formulation itself. Existing methods for diffusion models force the use of inefficient stochastic (SDE) samplers to fit the policy-gradient framework, leading to slow training and suboptimal sample quality.
@@ -47,6 +48,47 @@ DGPO consistently outperforms Flow-GRPO on target metrics for Compositional Gene
 | **_Human Preference Alignment:_** | | | | | | | | |
 | Flow-GRPO | --- | --- | 23.31 | 5.92 | 4.22 | 1.28 | 23.53 | 3.66 |
 | **DGPO (Ours)** | --- | --- | **23.89** | **6.08** | **4.40** | **1.32** | **23.91** | **3.74** |
+
+
+## 🚀 Quick Started
+
+Clone this repository and install packages.
+```bash
+git clone https://github.com/Luo-Yihong/DGPO.git
+cd flow_grpo
+conda create -n flow_grpo python=3.10.16
+pip install -e .
+```
+### Reward Preparation
+```bash
+# GenEval
+pip install -U openmim
+mim install mmengine
+git clone https://github.com/open-mmlab/mmcv.git
+cd mmcv; git checkout 1.x
+MMCV_WITH_OPS=1 FORCE_CUDA=1 pip install -e . -v
+cd ..
+
+git clone https://github.com/open-mmlab/mmdetection.git
+cd mmdetection; git checkout 2.x
+pip install -e . -v
+cd ..
+
+# OCR
+pip install paddlepaddle-gpu==2.6.2
+pip install paddleocr==2.9.1
+pip install python-Levenshtein
+```
+
+
+### Start Training
+```bash
+bash scripts/single_node/sd3_dgpo_ocr.sh
+```
+
+## Acknowledgement
+Motivated by a thoughtful comment during the review process, we have added PPO-style clipping in training, where we observed improved training stability. Thanks to the effort by the anonymous reviewers. Our codebase is largely built upon [Flow-GRPO](https://github.com/yifan123/flow_grpo). We simplify the environment setup for GenEval following [DiffusionNFT](https://github.com/NVlabs/DiffusionNFT). We thank the authors for their efforts to the open-source codebase.
+
 
 ## Contact
 
