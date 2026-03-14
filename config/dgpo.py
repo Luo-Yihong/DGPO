@@ -65,8 +65,8 @@ def geneval_sd3_4gpu():
 
     config.resolution = 512
     config.sample.train_batch_size = 8 * 2
-    config.sample.num_image_per_prompt = 16 
-    num_groups = 8
+    config.sample.num_image_per_prompt = 16 # set to be 24 for better performance.
+    num_groups = 8 # set to be 24 for better performance.
     config.sample.num_batches_per_epoch = int(num_groups/(gpu_number*config.sample.train_batch_size/config.sample.num_image_per_prompt))
     config.sample.test_batch_size = 14 # This bs is a special design, the test set has a total of 2212, to make gpu_num*bs*n as close as possible to 2212, because when the number of samples cannot be divided evenly by the number of cards, multi-card will fill the last batch to ensure each card has the same number of samples, affecting gradient synchronization.
 
@@ -107,8 +107,8 @@ def general_ocr_sd3_4gpu():
     config.clip_range = 1e-2
     config.resolution = 512
     config.sample.train_batch_size = 8 * 2
-    config.sample.num_image_per_prompt = 16
-    num_groups = 8
+    config.sample.num_image_per_prompt = 16 # set to be 24 for better performance.
+    num_groups = 8 # set to be 24 for better performance.
     config.sample.num_batches_per_epoch = int(num_groups/(gpu_number*config.sample.train_batch_size/config.sample.num_image_per_prompt))
     config.sample.test_batch_size = 16 # 16 is a special design, the test set has a total of 1018, to make 8*16*n as close as possible to 1018, because when the number of samples cannot be divided evenly by the number of cards, multi-card will fill the last batch to ensure each card has the same number of samples, affecting gradient synchronization.
 
