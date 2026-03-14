@@ -55,7 +55,7 @@ DGPO consistently outperforms Flow-GRPO on target metrics for Compositional Gene
 Clone this repository and install packages.
 ```bash
 git clone https://github.com/Luo-Yihong/DGPO.git
-cd DGOI
+cd DGPO
 conda create -n flow_grpo python=3.10.16
 pip install -e .
 ```
