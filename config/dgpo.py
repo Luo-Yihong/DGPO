@@ -85,7 +85,7 @@ def geneval_sd3_4gpu():
         "geneval": 1.0,
     }
 
-    config.train.beta_dpo = 101
+    config.train.beta_dpo = 100
     
     config.prompt_fn = "geneval"
 
