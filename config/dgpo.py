@@ -31,6 +31,9 @@ def compressibility():
     config.switch_ema_ref = 200
     config.train.beta_dpo = 100
     config.clip_range = 5e-2
+    # Set clip_range to be 1e-2, 1e-3 can be more stable but slower training
+    # config.clip_range = 1e-2
+    # config.clip_range = 1e-3
 
     # PPO-style Clipping
     config.clip_dsm = True
@@ -101,6 +104,7 @@ def general_ocr_sd3_4gpu():
     config.sample.eval_num_steps = 14
     config.sample.guidance_scale = 4.5
 
+    config.clip_range = 1e-2
     config.resolution = 512
     config.sample.train_batch_size = 8 * 2
     config.sample.num_image_per_prompt = 16
