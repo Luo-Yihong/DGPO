@@ -12,7 +12,7 @@ This is the Official Repository of "[Reinforcing Diffusion Models by Direct Grou
 </table>
 
 ## 🔥News
-- (2026/01) DGPO is accepted to ICLR 2025 🎉!
+- (2026/01) DGPO is accepted to ICLR 2026 🎉!
 - (2026/03/07) Code is ready to be released next week.
 - (2026/03/14) Training code is released.
 
