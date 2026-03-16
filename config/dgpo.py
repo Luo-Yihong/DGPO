@@ -52,7 +52,7 @@ def geneval_sd3_4gpu():
     # sd3.5 medium
     config.pretrained.model = "stabilityai/stable-diffusion-3.5-medium"
     config.sample.num_steps = 10
-    config.sample.eval_num_steps = 14
+    config.sample.eval_num_steps = 14 # For quick monitoring metrics during training.
     config.sample.guidance_scale = 4.5
     config.sample.noise_level = 0
 
@@ -101,7 +101,7 @@ def general_ocr_sd3_4gpu():
     # sd3.5 medium
     config.pretrained.model = "stabilityai/stable-diffusion-3.5-medium"
     config.sample.num_steps = 10
-    config.sample.eval_num_steps = 14
+    config.sample.eval_num_steps = 14 # For quick monitoring metrics during training.
     config.sample.guidance_scale = 4.5
 
     config.clip_range = 1e-2
