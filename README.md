@@ -86,7 +86,7 @@ We recommend using the "CFG during training, no CFG during inference" mode by de
 ```bash
 bash scripts/single_node/sd3_dgpo_ocr.sh
 ```
-We also support a fully CFG-free mode, in which case we recommend using a reference model with CFG for the DGPO loss computation or using the dynamic reference model proposed in [TDM-R1](https://arxiv.org/abs/2603.07700):
+We also support a fully CFG-free mode, in which case we recommend using a reference model with CFG for the DGPO loss computation or using the dynamic reference model proposed in [TDM-R1](https://arxiv.org/abs/2603.07700). Using a reference model without CFG will cause training to either slow down or become unstable.
 ```bash
 # ref w/ cfg:
 bash scripts/single_node/sd3_dgpo_ocr_wocfg.sh
@@ -94,6 +94,9 @@ bash scripts/single_node/sd3_dgpo_ocr_wocfg.sh
 # dynamic ref:
 bash scripts/single_node/sd3_dgpo_ocr_wocfg_emaref.sh
 ```
+In both of these without-CFG practice modes, we recommend using a reference model with CFG. Although this slightly increases the training time per iteration, it significantly improves the ODD metric and image quality.
+
+
 
 ## Acknowledgement
 Motivated by a thoughtful comment during the review process, we have added PPO-style clipping in training, where we observed improved training stability. Thanks to the effort by the anonymous reviewers. Our codebase is largely built upon [Flow-GRPO](https://github.com/yifan123/flow_grpo). We simplify the environment setup for GenEval following [DiffusionNFT](https://github.com/NVlabs/DiffusionNFT). We thank the authors for their efforts to the open-source codebase.
