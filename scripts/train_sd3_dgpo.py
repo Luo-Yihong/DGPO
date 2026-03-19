@@ -287,11 +287,13 @@ class DistributedKRepeatSampler(Sampler):
     def set_epoch(self, epoch):
         self.epoch = epoch  # Used to synchronize random state across epochs
 
-def predict_v(transformer, noisy_samples, timesteps, embeds, pooled_embeds, config, cfg = True):
+def predict_v(transformer, noisy_samples, timesteps, embeds, pooled_embeds, config, cfg = True, cfg_scale = None):
     """
     修改后的函数：计算模型预测速度的对数概率。
     保持输入参数不变。
     """
+    if cfg_scale is None:
+        cfg_scale = config.sample.guidance_scale
     if config.train.cfg and cfg:
         noise_pred = transformer(
             hidden_states=torch.cat([noisy_samples] * 2),
@@ -304,7 +306,7 @@ def predict_v(transformer, noisy_samples, timesteps, embeds, pooled_embeds, conf
         noise_pred_uncond = noise_pred_uncond.detach()
         predicted_velocity = (
             noise_pred_uncond
-            + config.sample.guidance_scale
+            + cfg_scale
             * (noise_pred_text - noise_pred_uncond)
         )
     elif config.train.cfg and (not cfg):
@@ -1107,12 +1109,20 @@ def main(_):
                         with autocast():
                             with torch.no_grad():
                                 with transformer.module.disable_adapter():
-                                    ref_old_v = predict_v(transformer, xt, t, embeds, pooled_embeds, config, cfg = False)
+                                    if config.kl_cfg > 1:
+                                        ref_old_v = predict_v(transformer, xt, t, embeds, pooled_embeds, config, cfg = True, cfg_scale=config.kl_cfg)
+                                    else:
+                                        ref_old_v = predict_v(transformer, xt, t, embeds, pooled_embeds, config, cfg = False)
                                 if use_old:
                                     ema_ref.copy_ema_to(transformer_trainable_parameters, store_temp=True)
                                     old_v = predict_v(transformer, xt, t, embeds, pooled_embeds, config, cfg = False)
                                     ema_ref.copy_temp_to(transformer_trainable_parameters)
                             model_v = predict_v(transformer, xt, t, embeds, pooled_embeds, config, cfg = False)
+
+                        ref_dgpo_v = ref_old_v
+                        if config.use_ema_ref:
+                            ref_dgpo_v = old_v
+
                         # grpo-style advantages
                         advantages = torch.clamp(
                             sample["advantages"][:, j],
@@ -1134,7 +1144,7 @@ def main(_):
                                 dsm_loss = torch.where(should_clip, dsm_loss.detach(), dsm_loss)
 
                         dgpo_loss = compute_group_dgpo_loss_allreduce(
-                            model_v, ref_old_v, target_v, advantages,
+                            model_v, ref_dgpo_v, target_v, advantages,
                             group_info, accelerator, config.train.beta_dpo, group_size=config.sample.num_image_per_prompt, dsm_loss = dsm_loss,
                         )
                         if config.train.beta > 0:

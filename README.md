@@ -82,8 +82,17 @@ pip install python-Levenshtein
 
 
 ### Start Training
+We recommend using the "CFG during training, no CFG during inference" mode by default:
 ```bash
 bash scripts/single_node/sd3_dgpo_ocr.sh
+```
+We also support a fully CFG-free mode, in which case we recommend using a reference model with CFG for the DGPO loss computation or using the dynamic reference model proposed in [TDM-R1](https://arxiv.org/abs/2603.07700):
+```bash
+# ref w/ cfg:
+bash scripts/single_node/sd3_dgpo_ocr_wocfg.sh
+
+# dynamic ref:
+bash scripts/single_node/sd3_dgpo_ocr_wocfg_emaref.sh
 ```
 
 ## Acknowledgement

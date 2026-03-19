@@ -26,6 +26,9 @@ def get_config():
     config.dataset = ""
     config.resolution = 768
 
+    config.kl_cfg = 1.0
+    config.use_ema_ref = False
+
     ###### Pretrained Model ######
     config.pretrained = pretrained = ml_collections.ConfigDict()
     # base model to load. either a path to a local directory, or a model name from the HuggingFace model hub.
