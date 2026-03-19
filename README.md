@@ -86,7 +86,7 @@ pip install python-Levenshtein
 ```bash
 bash scripts/single_node/sd3_dgpo_ocr.sh
 ```
-**We also support a fully CFG-free mode**, in which case *we recommend using a reference model with CFG for the DGPO loss computation or using the dynamic reference model proposed in [TDM-R1](https://arxiv.org/abs/2603.07700)*. Using a reference model without CFG will cause training to either slow down  (large beta_ddpo) or become unstable (small beta_ddpo).
+**We also support a fully CFG-free mode**, in which case *we recommend using a reference model with CFG for the DGPO loss computation or using the dynamic reference model proposed in [TDM-R1](https://arxiv.org/abs/2603.07700)*. Using a reference model without CFG will cause training to either slow down  (large beta_dgpo) or become unstable (small beta_dgpo).
 ```bash
 # ref w/ cfg:
 bash scripts/single_node/sd3_dgpo_ocr_wocfg.sh
