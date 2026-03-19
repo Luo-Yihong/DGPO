@@ -82,7 +82,7 @@ pip install python-Levenshtein
 
 
 ### Start Training
-We recommend using the "CFG during training, no CFG during inference" mode by default:
+We recommend using the "CFG during training, no CFG during inference" mode by default. This is because we found that this setup demonstrates a better trade-off between training time and the OOD metric.
 ```bash
 bash scripts/single_node/sd3_dgpo_ocr.sh
 ```
