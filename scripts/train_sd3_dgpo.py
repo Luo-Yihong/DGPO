@@ -1120,7 +1120,7 @@ def main(_):
                             model_v = predict_v(transformer, xt, t, embeds, pooled_embeds, config, cfg = False)
 
                         ref_dgpo_v = ref_old_v
-                        if config.use_ema_ref:
+                        if config.use_ema_ref: # Dynamic ref from TDM-R1 (https://arxiv.org/abs/2603.07700)
                             ref_dgpo_v = old_v
 
                         # grpo-style advantages
