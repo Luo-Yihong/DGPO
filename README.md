@@ -82,7 +82,7 @@ pip install python-Levenshtein
 
 
 ### Start Training
-**By default, DGPO uses the "CFG during training, no CFG during inference" mode by default**. We found that this setup demonstrates a better trade-off between training time and the OOD metric.
+***By default, DGPO uses the "CFG during inference, no CFG during training" mode***. We found that this setup demonstrates a better trade-off between training time and the OOD metric.
 ```bash
 bash scripts/single_node/sd3_dgpo_ocr.sh
 ```
