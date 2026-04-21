@@ -32,7 +32,8 @@ def compressibility():
     config.use_shared_noise = True
     config.switch_ema_ref = 200
     config.train.beta_dpo = 2000
-    config.clip_range = 1e-3
+    # config.clip_range = 1e-3
+    config.clip_range = 1e-5
 
     # PPO-style Clipping
     config.clip_dsm = True
