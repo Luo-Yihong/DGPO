@@ -12,6 +12,7 @@ This is the Official Repository of "[Reinforcing Diffusion Models by Direct Grou
 </table>
 
 ## 🔥News
+- (2026/04) DGPO has been integrated into [Flow-Factory](https://github.com/X-GenGroup/Flow-Factory).
 - (2026/01) DGPO is accepted to ICLR 2026 🎉!
 - (2026/03/07) Code is ready to be released next week.
 - (2026/03/14) Training code is released.
@@ -82,19 +83,84 @@ pip install python-Levenshtein
 
 
 ### Start Training
-***By default, DGPO uses the "CFG during inference, no CFG during training" mode***. We found that this setup demonstrates a better trade-off between training time and the OOD metric.
+
+***By default, DGPO uses the "CFG during inference, no CFG during training" mode.*** We found that this setup demonstrates a better trade-off between training time and the OOD metric.
+
 ```bash
 bash scripts/single_node/sd3_dgpo_ocr.sh
 ```
-**We also support a fully CFG-free mode**, in which case *we recommend using a reference model with CFG for the DGPO loss computation or using the dynamic reference model proposed in [TDM-R1](https://arxiv.org/abs/2603.07700)*. Using a reference model without CFG will cause training to either slow down  (large beta_dgpo) or become unstable (small beta_dgpo).
-```bash
-# ref w/ cfg:
-bash scripts/single_node/sd3_dgpo_ocr_wocfg.sh
 
-# dynamic ref:
+For other modes (fully CFG-free with frozen / dynamic reference) and the recommended hyper-parameters, see [Hyper-parameter Recipes](#hyper-parameter-recipes) below.
+
+### Hyper-parameter Recipes
+
+#### Core Loss Coefficients
+
+DGPO is controlled by a small set of keys spread across `config.train.*`, `config.sample.*`, and the top-level `config.*` namespace (see [config/base.py](config/base.py) and per-task configs in [config/](config/)):
+
+| Key | Meaning |
+| --- | --- |
+| `config.train.beta_dpo` | DPO beta scaling for group preference; larger -> sharper sigmoid weighting. |
+| `config.train.beta` | KL penalty weight (a.k.a. `kl_beta`). 0 disables the KL term. |
+| `config.kl_cfg` | CFG scale on the (frozen) reference. >1 enables CFG on the KL reference branch. |
+| `config.sample.guidance_scale` | CFG used during the rollout process. |
+| `config.clip_range` | PPO-style clip range (scalar, expanded to `(-c, c)`). |
+| `config.use_ema_ref` | If `True`, use a dynamic EMA reference model ([TDM-R1](https://arxiv.org/abs/2603.07700) style). |
+
+DGPO supports two practical modes: (1) rollout w/ CFG, training w/o CFG; (2) CFG-free in both rollout and training.
+
+#### Mode 1 — Rollout w/ CFG, training w/o CFG (default)
+
+Best trade-off between training time and OOD performance. The reference model is frozen and used **without** CFG. Typical ranges: `beta_dpo` 10 ~ 100, `clip_range` 1e-3 ~ 1e-2.
+
+```bash
+bash scripts/single_node/sd3_dgpo_ocr.sh
+```
+
+```python
+# excerpt from config/dgpo.py
+config.train.beta_dpo        = 100.0
+config.train.beta            = 1e-3
+config.kl_cfg                = 1.0
+config.sample.guidance_scale = 4.5
+config.clip_range            = 1e-3
+```
+
+#### Mode 2 — Fully CFG-free
+
+CFG-free converges significantly faster but generally trades off some OOD performance. A **small** PPO clip is recommended for stability: `clip_range` 1e-5 ~ 1e-4. Two reference-model choices (using a reference w/o CFG slows training down with large `beta_dpo`, or makes it unstable with small `beta_dpo`, so it is not recommended):
+
+**(a) Frozen reference with CFG on the KL branch** — `beta_dpo` 10 ~ 100:
+
+```bash
+bash scripts/single_node/sd3_dgpo_ocr_wocfg.sh
+```
+
+```python
+# excerpt from config/dgpo_wocfg.py
+config.train.beta_dpo        = 100.0
+config.train.beta            = 1e-3
+config.kl_cfg                = 4.5
+config.sample.guidance_scale = 1.0
+config.clip_range            = 1e-5
+config.use_ema_ref           = False
+```
+
+**(b) Dynamic EMA reference model**  — `beta_dpo` typically larger, 2000 ~ 5000:
+
+```bash
 bash scripts/single_node/sd3_dgpo_ocr_wocfg_emaref.sh
 ```
-In both of these without-CFG practice modes, we recommend using a reference model with CFG. Although this slightly increases the training time per iteration, it significantly improves the ODD metric and image quality.
+
+```python
+# excerpt from config/dgpo_wocfg_emaref.py
+config.train.beta_dpo        = 2000.0
+config.train.beta            = 1e-3
+config.kl_cfg                = 1.0 # or 4.5/3.5
+config.sample.guidance_scale = 1.0
+config.clip_range            = 1e-5
+config.use_ema_ref           = True
+```
 
 
 
