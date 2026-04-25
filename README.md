@@ -11,6 +11,22 @@ This is the Official Repository of "[Reinforcing Diffusion Models by Direct Grou
   </tr>
 </table>
 
+## Table of Contents
+
+- [News](#news)
+- [Method](#method)
+- [Main Results](#main-results)
+- [Quick Started](#-quick-started)
+  - [Reward Preparation](#reward-preparation)
+  - [Start Training](#start-training)
+  - [Hyper-parameter Recipes](#hyper-parameter-recipes)
+    - [Core Loss Coefficients](#core-loss-coefficients)
+    - [Mode 1 — Rollout w/ CFG, training w/o CFG (default)](#mode-1--rollout-w-cfg-training-wo-cfg-default)
+    - [Mode 2 — Fully CFG-free](#mode-2--fully-cfg-free)
+- [Acknowledgement](#acknowledgement)
+- [Contact](#contact)
+- [Bibtex](#bibtex)
+
 ## 🔥News
 - (2026/04) DGPO has been integrated into [Flow-Factory](https://github.com/X-GenGroup/Flow-Factory).
 - (2026/01) DGPO is accepted to ICLR 2026 🎉!
@@ -175,14 +191,11 @@ Please contact Yihong Luo (yluocg@connect.ust.hk) if you have any questions abou
 ## Bibtex
 
 ```
-@misc{luo2025dgpo,
-      title={Reinforcing Diffusion Models by Direct Group Preference Optimization}, 
-      author={Yihong Luo and Tianyang Hu and Jing Tang},
-      year={2025},
-      eprint={2510.08425},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2510.08425}, 
+@inproceedings{luo2026dgpo,
+              title={Reinforcing Diffusion Models by Direct Group Preference Optimization},
+              author={Yihong Luo and Tianyang Hu and Jing Tang},
+              booktitle={The Fourteenth International Conference on Learning Representations},
+              year={2026},
 }
 ```
 
