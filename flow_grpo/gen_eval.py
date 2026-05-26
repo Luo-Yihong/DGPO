@@ -52,10 +52,7 @@ def load_geneval(DEVICE):
         object_detector = init_detector(CONFIG_PATH, _CKPT_PATH, device=DEVICE)
 
         clip_arch = "ViT-L-14"
-        # clip_model, _, transform = open_clip.create_model_and_transforms(clip_arch, pretrained="/data/user/yluocg/projs/DiffusionNFT/reward_ckpts/open_clip_pytorch_model.bin", device=DEVICE) # ViT-H-14
-        # clip_model, _, transform = open_clip.create_model_and_transforms(clip_arch, pretrained="openai", device=DEVICE)
-        pretrained_path = "/data/user/yluocg/models/open_clip_ViT-L-14.safetensors"
-        clip_model, _, transform = open_clip.create_model_and_transforms(clip_arch, device=DEVICE)
+        clip_model, _, transform = open_clip.create_model_and_transforms(clip_arch, pretrained="openai", device=DEVICE)
         tokenizer = open_clip.get_tokenizer(clip_arch)
         state_dict = load_file(pretrained_path)
         state_dict = {k.replace("model.", ""): v for k, v in state_dict.items()}
