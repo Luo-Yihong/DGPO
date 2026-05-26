@@ -54,10 +54,6 @@ def load_geneval(DEVICE):
         clip_arch = "ViT-L-14"
         clip_model, _, transform = open_clip.create_model_and_transforms(clip_arch, pretrained="openai", device=DEVICE)
         tokenizer = open_clip.get_tokenizer(clip_arch)
-        state_dict = load_file(pretrained_path)
-        state_dict = {k.replace("model.", ""): v for k, v in state_dict.items()}
-        clip_model.load_state_dict(state_dict, strict=False)  # strict=False 忽略不匹配的 key
-
 
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets/object_names.txt")) as cls_file:
             classnames = [line.strip() for line in cls_file]
